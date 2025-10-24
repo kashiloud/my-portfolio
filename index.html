@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kashi Sharon — Designer • Developer • Writer</title>
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon (optional) -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <style>
+    /* -------------------------
+       BASE / RESET
+       ------------------------- */
+    :root{
+      --bg-1: #1b0535;
+      --bg-2: #4b2a90;
+      --bg-3: #b04fa4;
+      --accent: #c9a7ff;
+      --accent-2: #ff8fb3;
+      --glass-bg: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.12);
+      --card-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --max-width: 1150px;
+      --radius: 14px;
+      --text: #ffffff;
+      --muted: rgba(255,255,255,0.85);
+      --small: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      color:var(--text);
+      background: linear-gradient(120deg,var(--bg-1),var(--bg-2),var(--bg-3));
+      background-size: 400% 400%;
+      animation: bgShift 14s ease infinite;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    @keyframes bgShift{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    main{min-height:100vh}
+
+    .container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:1.25rem;
+    }
+
+    /* -------------------------
+       LOADING OVERLAY
+       ------------------------- */
+    #loader{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg, rgba(10,10,10,0.45), rgba(10,10,10,0.6));
+      z-index:9999;
+      transition:opacity .4s ease,visibility .4s ease;
+    }
+    #loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+    .spinner{
+      width:96px;height:96px;border-radius:18px;
+      background:linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.08);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: var(--card-shadow);
+      animation: pop 1s ease;
+    }
+    .spinner::after{
+      content:"";
+      width:36px;height:36px;border-radius:50%;
+      background:conic-gradient(var(--accent), var(--accent-2), transparent 70%);
+      animation:spin 1.1s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes pop{0%{transform:scale(.95);opacity:0}100%{transform:scale(1);opacity:1}}
+
+    /* -------------------------
+       HEADER / NAV
+       ------------------------- */
+    header{
+      position:sticky;top:16px; z-index:900;
+      padding:0.5rem;
+      pointer-events:auto;
+    }
+    .nav-wrap{
+      display:flex;align-items:center;justify-content:space-between;
+      max-width:var(--max-width);margin:0 auto;padding:0 1rem;
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border:1px solid var(--glass-border);
+      border-radius:18px;padding:12px 18px;backdrop-filter: blur(8px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    }
+    .brand{
+      display:flex;align-items:center;gap:.7rem;font-weight:700;font-size:1.05rem;
+      letter-spacing:.2px;color:var(--text);
+    }
+    .brand .logo-mark{
+      width:40px;height:40px;border-radius:10px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#111;
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
+    nav a{
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+      padding:.55rem .8rem;border-radius:10px;
+      transition:all .25s ease;font-size:0.95rem;
+    }
+    nav a:hover{color:var(--text);background:rgba(255,255,255,0.03);transform:translateY(-2px)}
+    nav a.active{background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); color:var(--text); box-shadow:0 6px 20px rgba(0,0,0,0.25)}
+
+    /* mobile toggle */
+    .menu-toggle{display:none;font-size:1.15rem;background:transparent;border:none;color:var(--text);cursor:pointer}
+
+    /* -------------------------
+       HERO
+       ------------------------- */
+    .hero{
+      margin:2rem auto 1.5rem;
+      border-radius:20px;
+      padding:3.25rem 1.5rem;
+      max-width:var(--max-width);
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      backdrop-filter: blur(6px);
+      display:flex;align-items:center;justify-content:space-between;gap:1.25rem;
+    }
+
+    .hero .left{
+      flex:1; min-width:260px;
+    }
+    .hero h1{
+      font-size:clamp(1.5rem, 3.3vw, 2.1rem);
+      margin:0 0 .6rem;line-height:1.05;
+      font-weight:700;
+    }
+    .hero h1 .accent{color:var(--accent);background:linear-gradient(90deg, rgba(255,255,255,0.06), transparent); padding:0 .18rem;border-radius:6px}
+    .hero p{color:rgba(255,255,255,0.9);margin:0 0 1rem;font-size:clamp(.95rem,.85rem + .2vw,1.05rem);max-width:56ch}
+
+    .hero .cta{display:flex;gap:.75rem;align-items:center}
+    .btn{
+      display:inline-flex;align-items:center;gap:.6rem;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#111;border:none;padding:.55rem .95rem;border-radius:999px;font-weight:700;
+      cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,0.28);text-decoration:none;
+      transition:transform .25s ease, box-shadow .25s ease;
+      font-size:0.95rem;
+    }
+    .btn.secondary{
+      background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--muted)
+    }
+    .btn:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,0.35)}
+
+    /* hero art (right) */
+    .hero .visual{
+      width:360px;flex:0 0 360px;border-radius:12px;overflow:hidden;height:220px;
+      background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;
+    }
+    .hero .visual img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(.06) saturate(1.05)}
+
+    /* -------------------------
+       SECTIONS
+       ------------------------- */
+    section.section{
+      margin:1.75rem auto; padding:1.75rem;border-radius:var(--radius);
+      max-width:var(--max-width); background:transparent;
+    }
+    h2.section-title{font-size:1.15rem;margin:0 0 1rem;color:var(--accent);letter-spacing:.6px}
+
+    .about-grid{display:grid;grid-template-columns:280px 1fr;gap:1.25rem;align-items:center}
+    .about-photo{width:100%;border-radius:12px;height:220px;object-fit:cover;border:1px solid rgba(255,255,255,0.06)}
+    .about p{margin:0;color:rgba(255,255,255,0.95);font-size:0.98rem}
+
+    /* SERVICES */
+    .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .service-card{
+      background:var(--glass-bg);border:1px solid var(--glass-border);padding:1rem;border-radius:12px;
+      transition:transform .35s ease, box-shadow .35s ease; text-align:center;
+    }
+    .service-card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(0,0,0,0.45)}
+    .service-icon{font-size:1.6rem;margin-bottom:.45rem;display:inline-block}
+
+    /* PORTFOLIO */
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1rem;
+      align-items:stretch;
+    }
+    .project{
+      position:relative;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.06);
+      box-shadow:0 12px 35px rgba(0,0,0,0.32);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      cursor:pointer;
+      transition:transform .45s cubic-bezier(.2,.9,.3,1), box-shadow .45s;
+    }
+    .project:hover{transform:translateY(-8px);box-shadow:0 32px 70px rgba(0,0,0,0.48)}
+    .project img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .6s ease}
+    .project .meta{
+      position:absolute;left:0;right:0;bottom:0;padding:1rem;background:linear-gradient(180deg, transparent, rgba(0,0,0,0.6));
+      color:#fff;transform:translateY(24px);opacity:0;transition:all .36s ease;
+    }
+    .project:hover img{transform:scale(1.06)}
+    .project:hover .meta{transform:translateY(0);opacity:1}
+    .meta h3{margin:0;font-size:1rem;color:var(--accent)}
+    .meta p{margin:.35rem 0 0;font-size:0.85rem;color:rgba(255,255,255,0.9)}
+
+    /* LIGHTBOX */
+    .lightbox{
+      position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.85));
+      z-index:9998;padding:2rem;visibility:hidden;opacity:0;transition:opacity .3s ease, visibility .3s ease;
+    }
+    .lightbox.open{visibility:visible;opacity:1}
+    .lightbox .card{
+      width:min(1100px,95%);border-radius:12px;overflow:hidden;background:#0f0621;border:1px solid rgba(255,255,255,0.06);
+      display:flex;align-items:stretch;gap:1rem;
+    }
+    .lightbox .card .image{flex:1;min-height:320px}
+    .lightbox .card img{width:100%;height:100%;object-fit:cover;display:block}
+    .lightbox .card .info{width:420px;padding:1rem;display:flex;flex-direction:column;gap:.75rem}
+    .lightbox h3{margin:0;color:var(--accent)}
+    .lightbox p{margin:0;color:rgba(255,255,255,0.9)}
+    .lightbox .close{
+      margin-top:auto;align-self:flex-end;background:transparent;border:1px solid rgba(255,255,255,0.06);padding:.5rem .7rem;border-radius:8px;color:var(--text);cursor:pointer;
+    }
+
+    /* CONTACT + FOOTER */
+    .contact-list{list-style:none;padding:0;margin:0;display:flex;gap:1rem;flex-direction:column}
+    .contact-list a{color:var(--accent);text-decoration:none;font-weight:600}
+
+    footer{margin:2rem 0;padding:1.25rem;text-align:center;color:rgba(255,255,255,0.85)}
+
+    /* BACK TO TOP */
+    #back-to-top{
+      position:fixed;right:18px;bottom:20px;background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      color:#111;border:none;padding:.5rem .7rem;border-radius:999px;font-size:1rem;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,0.35);
+      opacity:0;transform:translateY(8px);transition:opacity .3s ease, transform .3s ease;z-index:999;
+    }
+    #back-to-top.show{opacity:1;transform:translateY(0)}
+
+    /* -------------------------
+       NAV GLOW ON SECTION
+       ------------------------- */
+    .nav-glow{position: absolute;left:0;right:0;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));opacity:0;transition:opacity .25s}
+    .nav-active{opacity:1}
+
+    /* -------------------------
+       RESPONSIVE
+       ------------------------- */
+    @media (max-width:1080px){
+      .portfolio-grid{grid-template-columns:repeat(2,1fr)}
+      .service-grid{grid-template-columns:repeat(2,1fr)}
+      .hero{flex-direction:column;align-items:flex-start;padding:2rem}
+      .hero .visual{width:100%;height:180px;margin-top:1rem}
+    }
+    @media (max-width:720px){
+      .nav-wrap{padding:10px 12px}
+      nav ul{display:none;position:absolute;top:74px;right:14px;background:rgba(11,7,20,0.9);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);flex-direction:column}
+      nav ul.open{display:flex;min-width:180px}
+      .menu-toggle{display:inline-block}
+      .about-grid{grid-template-columns:1fr; text-align:left}
+      .portfolio-grid{grid-template-columns:1fr}
+      .hero h1{font-size:1.35rem}
+      #back-to-top{right:12px;bottom:12px}
+      .lightbox .card{flex-direction:column}
+      .lightbox .card .info{width:100%}
+    }
+
+    /* small text tuning */
+    small, .muted{font-size:var(--small);color:rgba(255,255,255,0.8)}
+  </style>
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loader" aria-hidden="false">
+    <div class="spinner" role="img" aria-label="Loading portfolio"></div>
+  </div>
+
+  <!-- Header / Nav -->
+  <header>
+    <div class="nav-wrap" role="navigation" aria-label="Main navigation">
+      <div class="brand" aria-hidden="false">
+        <div class="logo-mark">KS</div>
+        <div>
+          <div style="font-weight:700">Kashi Sharon</div>
+          <small style="color:var(--muted);font-size:12px">Designer • Developer • Writer</small>
+        </div>
+      </div>
+
+      <nav style="display:flex;align-items:center;gap:1rem">
+        <ul id="navList">
+          <li><a href="#about" data-target="about">About</a></li>
+          <li><a href="#services" data-target="services">Services</a></li>
+          <li><a href="#portfolio" data-target="portfolio">Portfolio</a></li>
+          <li><a href="#contact" data-target="contact">Contact</a></li>
+        </ul>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="left">
+        <h1>Crafting <span class="accent">Digital Experiences</span> That Inspire</h1>
+        <p>Beautiful, accessible, and high-performance website designed with strategy, built with care. I combine UI/UX, front-end engineering, and content to deliver products people love.</p>
+
+        <div class="cta">
+          <a class="btn" href="#contact">Let’s Collaborate</a>
+          <a class="btn secondary" href="#portfolio">See Featured Work</a>
+        </div>
+      </div>
+
+
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="container">
+        <h2 class="section-title" id="about-title">About</h2>
+        <div class="about-grid">
+          <img class="about-photo" src="https://images.unsplash.com/photo-1503602642458-232111445657?w=900&q=80&auto=format&fit=crop" alt="Creative workspace, abstract desktop">
+          <div class="about">
+            <p>I’m <strong>Kashi Sharon</strong>. I design and build thoughtful digital products interfaces that look sharp and behave beautifully. My work balances typography, motion, and accessibility with clean engineering. I’m seeking opportunities in product design & front-end development where I can deliver polished user experiences.</p>
+            <p style="margin-top:.7rem" class="muted">Skills: HTML, CSS, JavaScript, React, Figma, WordPress, SEO, Accessibility.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="container">
+        <h2 class="section-title" id="services-title">Services</h2>
+        <div class="service-grid" id="servicesGrid">
+          <div class="service-card" tabindex="0" aria-label="Design service">
+            <div class="service-icon">🎨</div>
+            <h4 style="margin:.5rem 0 0;font-size:1rem">UI / Visual Design</h4>
+            <small class="muted">Design systems, prototypes, and brand identity</small>
+          </div>
+
+          <div class="service-card" tabindex="0" aria-label="Development service">
+            <div class="service-icon">💻</div>
+            <h4 style="margin:.5rem 0 0;font-size:1rem">Front-end Development</h4>
+            <small class="muted">React, accessible components, responsive layouts</small>
+          </div>
+
+          <div class="service-card" tabindex="0" aria-label="Branding service">
+            <div class="service-icon">⚙️</div>
+            <h4 style="margin:.5rem 0 0;font-size:1rem">Brand & Content</h4>
+            <small class="muted">Copy, website content, SEO-friendly writing</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="section" aria-labelledby="portfolio-title">
+      <div class="container">
+        <h2 class="section-title" id="portfolio-title">Featured Projects</h2>
+
+        <div class="portfolio-grid" id="portfolioGrid">
+          <!-- Project 1 -->
+          <article class="project" tabindex="0" data-title="Café Bloom" data-desc="Brand identity and website for a cozy coffee shop. Warm palette, readable menus, and clear CTAs." data-img="https://images.unsplash.com/photo-1607083205259-2b34a7071e79?w=1200&q=80&auto=format&fit=crop">
+            <img src="data:image/jpeg;base64,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" alt="Café interior and branding">
+            <div class="meta">
+              <h3>Café Bloom</h3>
+              <p>Brand identity & responsive site</p>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="project" tabindex="0" data-title="Taskly App" data-desc="Responsive productivity app with dark mode and drag/drop features. Built with React & Node." data-img="https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&q=80&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?w=900&q=60&auto=format&fit=crop" alt="Task management app interface">
+            <div class="meta">
+              <h3>Taskly App</h3>
+              <p>React app, productivity features</p>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="project" tabindex="0" data-title="SmartEdge Solutions" data-desc="Complete WordPress redesign with SEO and lead-capture flows for a B2B tech consultancy." data-img="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=60&auto=format&fit=crop" alt="Enterprise website design">
+            <div class="meta">
+              <h3>SmartEdge Solutions</h3>
+              <p>WordPress redesign & SEO</p>
+            </div>
+          </article>
+
+          <!-- Project 4 -->
+          <article class="project" tabindex="0" data-title="Tech Blog Series" data-desc="Well-received educational articles for IT learners covering web fundamentals and APIs." data-img="https://images.unsplash.com/photo-1522204502380-87e62002a90b?w=1200&q=80&auto=format&fit=crop">
+            <img src="https://images.stockcake.com/public/e/b/5/eb563a84-2747-41ef-ab88-d89259aca6ec_large/tech-developer-setup-stockcake.jpg" alt="Programming setup and blog visuals">
+            <div class="meta">
+              <h3>Tech Blog Series</h3>
+              <p>Educational content & guides</p>
+            </div>
+          </article>
+
+          <!-- Project 5 (optional) -->
+          <article class="project" tabindex="0" data-title="Concept Landing" data-desc="Fast, minimal landing page templates for marketing campaigns and sign-ups." data-img="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1200&q=80&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=900&q=60&auto=format&fit=crop" alt="Landing page concept">
+            <div class="meta">
+              <h3>Concept Landing</h3>
+              <p>Marketing landing templates</p>
+            </div>
+          </article>
+
+          <!-- Project 6 (optional) -->
+          <article class="project" tabindex="0" data-title="Portfolio Revamp" data-desc="A visual redesign to showcase work clearly with case study modals and conversion-focused CTAs." data-img="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?w=1200&q=80&auto=format&fit=crop">
+            <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?w=900&q=60&auto=format&fit=crop" alt="Portfolio showcase">
+            <div class="meta">
+              <h3>Portfolio Revamp</h3>
+              <p>Case studies & conversion design</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 class="section-title" id="contact-title">Contact</h2>
+        <p style="color:rgba(255,255,255,0.95);max-width:60ch">If you'd like to collaborate, ask questions, or invite me for interviews, drop a line I respond fast.</p>
+        <ul class="contact-list" style="margin-top:1rem">
+          <li>📧 <a href="mailto:kashisharon5@gmail.com">kashisharon5@gmail.com</a></li>
+          <li class="muted"><small>Available for full-time roles and contract work.</small></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <small class="muted">© 2025 Kashi Sharon • Designed & Built by Kashi</small>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <button id="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- LIGHTBOX (hidden initially) -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-hidden="true" aria-labelledby="lightbox-title">
+    <div class="card" role="document">
+      <div class="image"><img id="lightbox-img" src="" alt=""></div>
+      <div class="info">
+        <h3 id="lightbox-title">Project</h3>
+        <p id="lightbox-desc">Description</p>
+        <button class="close" id="lightbox-close" aria-label="Close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     * Page behavior scripts
+     ***********************/
+
+    // Wait for images and small delay to hide loader
+    window.addEventListener('load', () => {
+      setTimeout(()=> document.getElementById('loader').classList.add('hidden'), 650);
+    });
+
+    // Mobile nav toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navList = document.getElementById('navList');
+    menuToggle.addEventListener('click', () => navList.classList.toggle('open'));
+
+    // Smooth internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        // close mobile menu
+        navList.classList.remove('open');
+        const t = document.querySelector(this.getAttribute('href'));
+        if(!t) return;
+        e.preventDefault();
+        t.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // Back to top visibility
+    const back = document.getElementById('back-to-top');
+    window.addEventListener('scroll', ()=> {
+      if(window.scrollY > 360) back.classList.add('show'); else back.classList.remove('show');
+    });
+    back.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+    /* IntersectionObserver for section-nav highlighting */
+    const sections = document.querySelectorAll('main section, main #hero');
+    const navLinks = document.querySelectorAll('#navList a');
+    const opts = { root:null, rootMargin:'-30% 0px -40% 0px', threshold:0 };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const id = entry.target.id || entry.target.getAttribute('id') || entry.target.querySelector('h2')?.id;
+          if(!id) return;
+          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+        }
+      });
+    }, opts);
+    sections.forEach(s => { if(s) io.observe(s); });
+
+    /* Simple reveal on scroll (no external lib) */
+    const revealEls = document.querySelectorAll('.service-card, .project, .about-grid, .hero .left, .hero .visual, .contact');
+    const revealObs = new IntersectionObserver((entries, obs)=>{
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.style.transition = 'opacity .8s ease, transform .8s cubic-bezier(.2,.9,.3,1)';
+          e.target.style.opacity = 1;
+          e.target.style.transform = 'translateY(0)';
+          obs.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(el=>{
+      el.style.opacity = 0;
+      el.style.transform = 'translateY(18px)';
+      revealObs.observe(el);
+    });
+
+    /* Lightbox for projects */
+    const portfolioGrid = document.getElementById('portfolioGrid');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbTitle = document.getElementById('lightbox-title');
+    const lbDesc = document.getElementById('lightbox-desc');
+    const lbClose = document.getElementById('lightbox-close');
+
+    portfolioGrid.addEventListener('click', (e)=>{
+      const card = e.target.closest('.project');
+      if(!card) return;
+      const title = card.dataset.title || card.querySelector('.meta h3')?.innerText;
+      const desc = card.dataset.desc || card.querySelector('.meta p')?.innerText;
+      const img = card.dataset.img || card.querySelector('img')?.src;
+      openLightbox({title, desc, img});
+    });
+
+    portfolioGrid.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        const card = e.target.closest('.project');
+        if(!card) return;
+        const title = card.dataset.title || card.querySelector('.meta h3')?.innerText;
+        const desc = card.dataset.desc || card.querySelector('.meta p')?.innerText;
+        const img = card.dataset.img || card.querySelector('img')?.src;
+        openLightbox({title, desc, img});
+      }
+    });
+
+    function openLightbox({title, desc, img}) {
+      lbImg.src = img;
+      lbImg.alt = title;
+      lbTitle.textContent = title;
+      lbDesc.textContent = desc;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e)=>{
+      if(e.target === lightbox) closeLightbox();
+    });
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
+
+    /* Keyboard & focus improvements for accessibility */
+    document.querySelectorAll('.project').forEach(p=>{
+      p.setAttribute('role','button');
+    });
+
+    // Reduce motion preference respect
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(prefersReduced.matches){
+      document.querySelectorAll('*').forEach(el => el.style.transition = 'none');
+    }
+
+    /* Small progressive enhancement: preload images (optional) */
+    // const imgs = document.querySelectorAll('img[data-src]');
+    // imgs.forEach(i => { i.src = i.dataset.src });
+
+  </script>
+</body>
+</html>

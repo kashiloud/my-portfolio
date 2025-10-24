@@ -1,0 +1,347 @@
+/* ---------- GLOBAL RESET ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: radial-gradient(circle at top left, #2d0a63, #0e0e2c);
+  color: #eee;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ---------- HEADER ---------- */
+header {
+  background: rgba(40, 0, 100, 0.7);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+nav {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.accent {
+  color: #a970ff;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #a970ff;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  text-align: center;
+  padding: 8rem 2rem 6rem;
+  background: linear-gradient(120deg, #1a0033, #2a0e4d, #3e0070);
+  color: #fff;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: url('https://svgshare.com/i/11tN.svg') no-repeat bottom center;
+  background-size: cover;
+}
+
+.hero h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 2rem;
+  background: linear-gradient(45deg, #9c6eff, #7c4dff);
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(156, 110, 255, 0.4);
+}
+
+.btn:hover {
+  background: linear-gradient(45deg, #b78eff, #9867ff);
+  box-shadow: 0 0 30px rgba(156, 110, 255, 0.6);
+}
+
+/* ---------- SECTION LAYOUT ---------- */
+section {
+  padding: 5rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  position: relative;
+  color: #fff;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: #a970ff;
+  margin: 0.6rem auto;
+  border-radius: 2px;
+}
+
+/* ---------- ABOUT ---------- */
+.about-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.about-content img {
+  width: 250px;
+  border-radius: 50%;
+  border: 3px solid #a970ff;
+  box-shadow: 0 0 20px rgba(169, 112, 255, 0.3);
+}
+
+.about-content p {
+  flex: 1;
+  color: #ddd;
+  font-size: 1rem;
+}
+
+/* ---------- SERVICES ---------- */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.service {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.service:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 30px rgba(169, 112, 255, 0.4);
+}
+
+.service-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.service h3 {
+  color: #fff;
+  margin-bottom: 0.8rem;
+}
+
+/* ---------- PORTFOLIO ---------- */
+.portfolio {
+  background: linear-gradient(120deg, #13002b, #200053);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project:hover img {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.project h3 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 1rem;
+}
+
+.project p {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin: 0 1rem 1.2rem;
+}
+
+.project:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(169, 112, 255, 0.4);
+}
+
+/* ---------- CONTACT ---------- */
+.contact {
+  text-align: center;
+}
+
+.contact p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  color: #ddd;
+}
+
+.contact a {
+  color: #a970ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  background: rgba(30, 0, 70, 0.9);
+  color: #fff;
+  text-align: center;
+  padding: 1.2rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- BACK TO TOP ---------- */
+#back-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: linear-gradient(45deg, #a970ff, #7c4dff);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 0.8rem 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(169, 112, 255, 0.4);
+  transition: all 0.3s ease;
+  display: none;
+  z-index: 999;
+}
+
+#back-to-top:hover {
+  box-shadow: 0 0 35px rgba(169, 112, 255, 0.6);
+  transform: translateY(-4px);
+}
+
+/* ---------- RESPONSIVE DESIGN ---------- */
+@media (max-width: 850px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background: rgba(20, 0, 50, 0.9);
+    border-radius: 10px;
+    padding: 1rem 2rem;
+  }
+
+  nav ul.active {
+    display: flex;
+  }
+
+  .hero h2 {
+    font-size: 1.7rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .about-content {
+    text-align: center;
+  }
+
+  .about-content img {
+    margin-bottom: 1rem;
+  }
+
+  #back-to-top {
+    padding: 0.6rem 0.8rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero h2 {
+    font-size: 2.5rem;
+  }
+}
